@@ -38,12 +38,9 @@ namespace SIAM
             Stream stream = response.GetResponseStream();
             StreamReader sr = new StreamReader(stream);
             String content = sr.ReadToEnd();
-            tbHasil.Text = content;
             JavaScriptSerializer json_serializer = new JavaScriptSerializer();
             Auth dc = json_serializer.Deserialize<Auth>(content);
-
-            tbHasil.Text = dc.PHPSESSID;
-
+            
         }
     }
     class Auth
