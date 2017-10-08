@@ -14,11 +14,11 @@ using System.Web.Script.Serialization;
 
 namespace SIAM
 {
-    public partial class Form1 : Form
+    public partial class FormLogin : Form
     {
         private static readonly HttpClient client = new HttpClient();
 
-        public Form1()
+        public FormLogin()
         {
             InitializeComponent();
         }

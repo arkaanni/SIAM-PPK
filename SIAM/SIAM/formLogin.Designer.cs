@@ -1,6 +1,6 @@
 ﻿namespace SIAM
 {
-    partial class Form1
+    partial class FormLogin
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -82,15 +82,17 @@
             // 
             // btnMasuk
             // 
+            this.btnMasuk.BackColor = System.Drawing.Color.Blue;
+            this.btnMasuk.ForeColor = System.Drawing.Color.White;
             this.btnMasuk.Location = new System.Drawing.Point(49, 194);
             this.btnMasuk.Name = "btnMasuk";
             this.btnMasuk.Size = new System.Drawing.Size(303, 57);
             this.btnMasuk.TabIndex = 5;
             this.btnMasuk.Text = "MASUK";
-            this.btnMasuk.UseVisualStyleBackColor = true;
+            this.btnMasuk.UseVisualStyleBackColor = false;
             this.btnMasuk.Click += new System.EventHandler(this.btnMasuk_Click);
             // 
-            // Form1
+            // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,7 +103,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "Form1";
+            this.Name = "FormLogin";
             this.Text = "SIAM";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
