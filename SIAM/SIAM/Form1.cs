@@ -32,7 +32,9 @@ namespace SIAM
         {
             String nim = tbNIM.Text;
             String password = tbPassword.Text;
-            HttpWebRequest http = (HttpWebRequest)WebRequest.Create("https://tanikita.000webhostapp.com/index.php?nim=155150200111094&password=sandibarunih");
+            HttpWebRequest http = (HttpWebRequest)WebRequest.Create("https://tanikita.000webhostapp.com/index.php?nim=" + tbNIM + "&password=" + tbPassword);
+            http.UserAgent = "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)";
+
             WebResponse response = http.GetResponse();
 
             Stream stream = response.GetResponseStream();
@@ -40,6 +42,13 @@ namespace SIAM
             String content = sr.ReadToEnd();
             JavaScriptSerializer json_serializer = new JavaScriptSerializer();
             Auth dc = json_serializer.Deserialize<Auth>(content);
+
+            if (dc.PHPSESSID.Length > 0)
+            {
+                Main main = new Main(nim, password);
+                main.Show();
+                this.Visible = false;
+            }
             
         }
     }
@@ -47,4 +56,5 @@ namespace SIAM
     {
         public string PHPSESSID { get; set; }
     }
+
 }
