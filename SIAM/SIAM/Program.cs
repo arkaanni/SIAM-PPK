@@ -16,7 +16,7 @@ namespace SIAM
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main("155150201111132", "qwerty"));
+            Application.Run(new FormLogin());
         }
     }
 }

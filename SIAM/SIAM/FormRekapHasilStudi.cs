@@ -8,6 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
+using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace SIAM
 {
@@ -15,29 +20,20 @@ namespace SIAM
     {
 
         private DataTable tabelRHS;
-        private String nim;
+        private String nim, password;
+        private String endpoint = "https://tanikita.000webhostapp.com/rekap.php?";
 
-        //connection info
-        //seuaikan Dan
-        private String username = "root";
-        private String password = "";
-        private String datasource = "localhost";
-        private String port = "3306";
-        private String database = "siam_ppk";
-
-        private MySqlConnection conn;
-
-        public FormRekapHasilStudi(String nim)
+        public FormRekapHasilStudi(String nim, String password)
         {
             InitializeComponent();
             this.nim = nim;
-            conn = MakeConnection(datasource, port, username, password, database);
+            this.password = password;
         }
-        
+
         private void FormRekapHasilStudi_Load(object sender, EventArgs e)
         {
             tabelRHS = new DataTable("Rekap Hasil Studi");
-            
+
             dataGridViewRHS.Columns.Add("kode_mk", "Kode MK");
             dataGridViewRHS.Columns.Add("mk", "Mata Kuliah");
             dataGridViewRHS.Columns.Add("jumlah_sks", "Jumlah SKS");
@@ -46,46 +42,45 @@ namespace SIAM
 
             try
             {
-                conn.Open();
-
-                GetRekapHasilStudi(nim);
+                GetRekapHasilStudi(nim, password);
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
             }
 
         }
 
-        //method untuk buat koneksi
-        private MySqlConnection MakeConnection(String datasource, String port, String username, String password, String database)
+        private void GetRekapHasilStudi(String nim, String password)
         {
-            String cred = "datasource=" + datasource + ";" + "port=" + port + ";" + "username=" + username + ";" + "password=" + password + ";" + "database=" + database + ";";
+            HttpWebRequest http = (HttpWebRequest)WebRequest.Create(endpoint + "nim=" + nim + "&password=" + password);
+            http.UserAgent = "Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)";
 
-            return new MySqlConnection(cred);
-        }
+            WebResponse responseRekap = http.GetResponse();
 
-        private void GetRekapHasilStudi(String nim)
-        {
-            //query nya juga disesuaikan
-            String q = "SELECT * FROM rekap_hasil_studi WHERE nim='" + nim + "'";
-            MySqlDataAdapter adapter;
+            Stream stream = responseRekap.GetResponseStream();
+            StreamReader sr = new StreamReader(stream);
+            String content = sr.ReadToEnd();
+            var json_serializer = new JavaScriptSerializer();
 
-            MySqlCommand getRHSCommand = new MySqlCommand(q, conn);
-            adapter = new MySqlDataAdapter(getRHSCommand);
+            // ngebenerin json respone pake regex
+            // stackoverflow.com/questions/39516952/invalid-array-passed-in-extra-trailing-getting-this-error-when-deserializi
 
-            adapter.Fill(tabelRHS);
-            getRHSCommand.ExecuteNonQuery();
+            var rx = new Regex(@",(\s*[\]}])", RegexOptions.Multiline);
+            content = rx.Replace(content, "$1");
 
-            foreach (DataRow row in tabelRHS.Rows)
+            dynamic rhs = json_serializer.DeserializeObject(content);
+
+            //get length
+            int length = ((ICollection)rhs).Count;
+
+            //MessageBox.Show(length.ToString());
+
+            for (int i = 0; i < length; i++)
             {
-                dataGridViewRHS.Rows.Add(row[2], row[3], row[4], row[5], row[6]);
+                dataGridViewRHS.Rows.Add(rhs[i]["kode"], rhs[i]["matkul"], rhs[i]["sks"], rhs[i]["tahun"], rhs[i]["nilai"]);
             }
-
-            conn.Close();
-
-            adapter.Dispose();
         }
     }
 }
