@@ -38,7 +38,7 @@
             this.lblProgstud = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnKRS = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnRHS = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbGambar)).BeginInit();
@@ -124,14 +124,15 @@
             this.btnKRS.UseVisualStyleBackColor = true;
             this.btnKRS.Click += new System.EventHandler(this.btnKRS_Click);
             // 
-            // button2
+            // btnRHS
             // 
-            this.button2.Location = new System.Drawing.Point(197, 293);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(161, 70);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "Rekap Hasil Studi";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnRHS.Location = new System.Drawing.Point(197, 293);
+            this.btnRHS.Name = "btnRHS";
+            this.btnRHS.Size = new System.Drawing.Size(161, 70);
+            this.btnRHS.TabIndex = 9;
+            this.btnRHS.Text = "Rekap Hasil Studi";
+            this.btnRHS.UseVisualStyleBackColor = true;
+            this.btnRHS.Click += new System.EventHandler(this.btnRHS_Click);
             // 
             // button3
             // 
@@ -158,7 +159,7 @@
             this.ClientSize = new System.Drawing.Size(728, 375);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnRHS);
             this.Controls.Add(this.btnKRS);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.lblStatus);
@@ -189,7 +190,7 @@
         private System.Windows.Forms.Label lblProgstud;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btnKRS;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnRHS;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
     }
